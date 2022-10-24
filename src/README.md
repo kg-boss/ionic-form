@@ -15,7 +15,7 @@ This project covers the use of the following components
 + [IonRadioGroup](https://ionicframework.com/docs/api/radio-group)
 
 #### NOTE:
-> The checkbox array behaviour is not supported in ionic! So instead of putting the same `v-model` for all checkbox, We had to merge the *label* and the *v-model* for each one.
+> The checkbox array behaviour is not supported in Ionic! So instead of putting the same `v-model` for all checkbox, We had to merge the *value* and the *v-model* for each one.
 #### Example
 
 ###### In VueJS
@@ -71,5 +71,12 @@ In template we should put
 ```
 To get the an array as in VueJS we could simply use TypeScript array functions like this
 ```JS
-  let selected = checkboxValues.filter(checkbox => checkbox.selected).map(checkbox => checkbox.val)
+ /* 
+  * checkboxValues is an Array of Objects as declared in data()
+  * filter(checkbox => checkbox.selected) this function filters the first array leaving only the objects with attribute selected set to true
+  * Example: if we only select the second and last checkbox the result is like the following: [{ val: 'item2', selected: true }, { val: 'item3', selected: true }]
+  * map(checkbox => checkbox.val) this function changes the filtered replacing the object by its val, 
+  * Example: the object { val: 'item1', selected: false } becomes the string 'item1' 
+  */
+  let selected = checkboxValues.filter(checkbox => checkbox.selected).map(checkbox => checkbox.val);
 ```
