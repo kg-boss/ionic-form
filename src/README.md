@@ -1,8 +1,29 @@
 # Ionic 6 / VueJS - demo project
 ---
-This project tests the behaviour of *VueJS basics* with *Ionic 6*
+This project tests the behaviour of *VueJS basics* with *Ionic 6*.
 
-## UI Components
+There are some ** *IMPORTANT TIPS & NOTES* ** that you definitely wanna read in this *README.md* file.
+This files covers
+1. UI Components
+2. Using API
+3. Deployment
+4. Notifications
+
+##### *IMPORTANT* : If you wanna use the project AS IS please NOTE these few changes
+In `src/config/urls.ts` please change the `YOUR_IP_ADDRESS` to your actual IP address to test APIs. Refer to `2- Usin API # Testing` for more informations
+```JS
+{
+    CIVILITIES_ALL_API  : "http://YOUR_PC_IP_ADDRESS:3000/civilites",
+    SPECIALITIES_ALL_API: "http://YOUR_PC_IP_ADDRESS:3000/specialites",
+    SUBJECTS_ALL_API    : "http://YOUR_PC_IP_ADDRESS:3000/subjects"
+}
+```
+In `src/config/one-signal.ts` please change the `YOUR_ONESIGNAL_APP_ID` to your OneSignal app ID to use Notifcations. Refer to `4- Notifications` for more informations
+```JS
+OneSignal.setAppId("YOUR_ONESIGNAL_APP_ID");
+```
+
+## 1 - UI Components
 This project covers the use of the following components
 + [IonButton](https://ionicframework.com/docs/api/button)
 + [IonInput](https://ionicframework.com/docs/api/input)
@@ -80,3 +101,126 @@ To get the an array as in VueJS we could simply use TypeScript array functions l
   */
   let selected = checkboxValues.filter(checkbox => checkbox.selected).map(checkbox => checkbox.val);
 ```
+---
+## 2 - Using APIs
+The Library we're going to use for this job is [Vue-Axios](https://www.npmjs.com/package/vue-axios)
+###### Downloding with npm
+```sh
+npm install --save axios vue-axios
+```
+###### Adding axios to project 
+In the file `main.ts`
+```js
+...
+// Add these imports
+import VueAxios from 'vue-axios';
+import axios from 'axios';
+...
+
+...
+const app = createApp(App)
+  .use(IonicVue)
+  .use(router)
+  .use(VueAxios, axios); // This line is added
+...
+```
+###### Usage in Vue
+```JS
+this.$http.get(api).then((response) => {
+  console.log(response.data)
+})
+```
+###### Testing
+For this purpose, we'll use [json-server](https://www.npmjs.com/package/json-server) to simulate an actual server.
+
+*Downloading Json-Server with npm*
+```SH
+npm install -g json-server
+```
+*Running Json-Server*
+```SH
+json-server --host YOUR_IP_ADDRESS YOUR_JSON_FILE
+# example json-server --host 192.168.1.10 public/db.json
+```
+---
+## 3 - Deployment
+For this project we'll focus on deploying to Android only!
+
+###### Adding Android to Project
+```SH
+npx cap add android
+```
+###### Building
+```SH
+ionic build
+npx cap copy & npx cap sync
+```
+###### Open In Android Studio
+```SH
+npx cap open android
+```
+### NOTE
+###### *Important* in newer Android Versions
+Add the following *line* in `AndroidManifest.xml` file
+```XML
+...
+<application
+             ...
+             android:usesCleartextTraffic="true"
+             ...
+             />
+...
+```
+---
+
+## 4 - Notifications
+For this project we'll use [OneSignal](https://documentation.onesignal.com/docs/ionic-sdk-setup) to Push our Notifications
+###### Downloding with npm
+```SH
+npm install onesignal-cordova-plugin
+npx cap sync
+```
+
+###### Adding OneSignal to Project
+For code organization purpose We chose to put the `OneSignalInit` function in a separate file. You can find it in `src/config/one-signal.ts`
+##### File Content
+```JS
+import OneSignal from 'onesignal-cordova-plugin';
+
+// Call this function when your app starts
+export function OneSignalInit(): void {
+  // Uncomment to set OneSignal device logging to VERBOSE  
+  // OneSignal.setLogLevel(6, 0);
+
+  // NOTE: Update the setAppId value below with your OneSignal AppId.
+  OneSignal.setAppId("YOUR_ONESIGNAL_APP_ID");
+  OneSignal.setNotificationOpenedHandler(function(jsonData) {
+      console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+  });
+
+  // Prompts the user for notification permissions.
+  //    * Since this shows a generic native prompt, we recommend instead using an In-App Message to prompt for notification permission (See step 7) to better communicate to your users what notifications they will get.
+  OneSignal.promptForPushNotificationsWithUserResponse(function(accepted) {
+      console.log("User accepted notifications: " + accepted);
+  });
+}
+```
+##### Usage
+In `src/App.vue` file
+```HTML
+<script lang="ts">
+...
+import { OneSignalInit } from './config/one-signal';
+...
+  
+export default defineComponent({
+  ...
+  created() {
+    OneSignalInit();
+  }
+  ...
+});
+</script>
+```
+##### Backend
+please refer to the *Documentation Page* following this [Link](https://documentation.onesignal.com/docs/ionic-sdk-setup)
