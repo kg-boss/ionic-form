@@ -48,7 +48,7 @@ ionic build
 npx cap copy & npx cap sync
 npx cap open android 
 ```
-> **IMPORTANT** some changes are required as mentioned in `3- Deployment` further down!
+> **IMPORTANT:** some changes are required in Android Project as mentioned in `3- Deployment` further down! [Click here](https://github.com/kg-boss/ionic-form#note-1) to check it
 
 ---
 ## Additional Info
