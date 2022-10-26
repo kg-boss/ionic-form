@@ -1,0 +1,10 @@
+
+{
+    "civilites": ["Mr", "Mme", "Mlles"],
+    "specialites": ["Informatique", "Mecanique", "Electrique"],
+    "subjects": [
+        {"label": "Java", "checked": false},
+        {"label": "POO" , "checked": false},
+        {"label": "C#"  , "checked": false}
+    ]
+}

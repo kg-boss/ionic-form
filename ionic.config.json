@@ -1,0 +1,7 @@
+{
+  "name": "atelier1",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
