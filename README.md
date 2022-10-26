@@ -4,6 +4,16 @@ This project tests the behaviour of *VueJS basics* with *Ionic 6*.
 
 ## Implementation
 
+### Loading Project
+
+```sh
+git clone -b master https://github.com/kg-boss/ionic-form.git
+cd NAME_OF_CLONED_REPO
+npm install
+# (optional) in case json-server is not installed and you wanna test the APIs
+npm install -g json-server
+```
+
 ### Necessary Changes
 In `src/config/urls.ts` please change the `YOUR_IP_ADDRESS` to your actual IP address to test APIs. Refer to `2- Usin API # Testing` for more informations
 ```JS
@@ -18,6 +28,26 @@ In `src/config/one-signal.ts` please change the `YOUR_ONESIGNAL_APP_ID` to your 
 OneSignal.setAppId("YOUR_ONESIGNAL_APP_ID");
 ```
 > *NOTE*: Running App on browser WILL FAIL as long as OneSignal is configured. To test other functionalities locally please comment out the `OneSignalInit()` function call in `src/App.vue # line-19` 
+
+### Running
+*Required to run APIs*
+```sh
+json-server --host YOUR_IP_ADDRESS public/db.json
+```
+
+*Running in Browser (NOTIFICATIONS DISABLED)*
+```sh
+ionic serve
+```
+
+*Building and running in Android Studio Emulator (Recommended)*
+```sh
+ionic build
+npx cap copy & npx cap sync
+npx cap open android 
+```
+> **IMPORTANT** some changes are required as mentioned in `3- Deployment` further down!
+
 ---
 ## Additional Info
 There are some *IMPORTANT TIPS & NOTES* that you definitely wanna read in this *README.md* file.
