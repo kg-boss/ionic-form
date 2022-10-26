@@ -4,6 +4,8 @@ This project tests the behaviour of *VueJS basics* with *Ionic 6*.
 
 ## Implementation
 
+> If you are only interested in `src` directory please switch to `main` branch 
+
 ### Loading Project
 
 ```sh
