@@ -1,8 +1,14 @@
+const BASE_URL = "BACKEND_BASE_URL";
+
 const UrlResolver = {
 
-    CIVILITIES_ALL_API  : "http://YOUR_IP_ADDRESS:3000/civilites",
-    SPECIALITIES_ALL_API: "http://YOUR_IP_ADDRESS:3000/specialites",
-    SUBJECTS_ALL_API    : "http://YOUR_IP_ADDRESS:3000/subjects"
+    BASE_URL: BASE_URL,
+
+    CIVILITIES_ALL_API   : BASE_URL + "/api/data/civilites",
+    SPECIALITIES_ALL_API : BASE_URL + "/api/data/specialites",
+    SUBJECTS_ALL_API     : BASE_URL + "/api/data/subjects",
+
+    CAMERA_RESOURCE_CRUD_API : BASE_URL + "/api/gallery/camera",
 
 };
 

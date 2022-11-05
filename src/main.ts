@@ -2,6 +2,8 @@ import { createApp } from 'vue'
 import VueAxios from 'vue-axios';
 import axios from 'axios';
 
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
+
 import App from './App.vue'
 import router from './router';
 
@@ -25,6 +27,8 @@ import '@ionic/vue/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+
+defineCustomElements(window);
 
 const app = createApp(App)
   .use(IonicVue)

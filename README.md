@@ -6,25 +6,34 @@ This project tests the behaviour of *VueJS basics* with *Ionic 6*.
 
 > If you are only interested in `src` directory please switch to `main` branch 
 
+### Requirements
+
+This project as Front-End depends on the [Ionic Backend Project](https://github.com/kg-boss/ionic-backend) for its APIs.
+
+Please refer to [that project](https://github.com/kg-boss/ionic-backend) and finish its configuration first.
+
 ### Loading Project
 
 ```sh
 git clone -b master https://github.com/kg-boss/ionic-form.git
 cd NAME_OF_CLONED_REPO
 npm install
-# (optional) in case json-server is not installed and you wanna test the APIs
-npm install -g json-server
 ```
 
 ### Necessary Changes
-In `src/config/urls.ts` please change the `YOUR_IP_ADDRESS` to your actual IP address to test APIs. Refer to `2- Usin API # Testing` for more informations
+In `src/config/urls.ts` please change the `BACKEND_BASE_URL` to the Network-URL of your running Backend Project to activate APIs. 
 ```JS
-{
-    CIVILITIES_ALL_API  : "http://YOUR_PC_IP_ADDRESS:3000/civilites",
-    SPECIALITIES_ALL_API: "http://YOUR_PC_IP_ADDRESS:3000/specialites",
-    SUBJECTS_ALL_API    : "http://YOUR_PC_IP_ADDRESS:3000/subjects"
-}
+/*
+ * NOTE: Your Backend Network URL can be different from your local URL
+ * example, using Laragon your local URL is probally http://127.0.0.1:8000 
+ * yet, your Network URL is http://YOUR_IP_ADDRESS/YOUR_LARAVEL_PROJECT_FOLDER_NAME/public
+ * in my case, it was http://192.168.1.15/LaravelIonicBackend/public
+ */
+const BASE_URL = "BACKEND_BASE_URL";
+
 ```
+> Please make sure your `BASE_URL` points to the `public` folder of the Backend project by testing APIs manually from other devices
+
 In `src/config/one-signal.ts` please change the `YOUR_ONESIGNAL_APP_ID` to your OneSignal app ID to use Notifcations. Refer to `4- Notifications` for more informations
 ```JS
 OneSignal.setAppId("YOUR_ONESIGNAL_APP_ID");
@@ -32,10 +41,8 @@ OneSignal.setAppId("YOUR_ONESIGNAL_APP_ID");
 > *NOTE*: Running App on browser WILL FAIL as long as OneSignal is configured. To test other functionalities locally please comment out the `OneSignalInit()` function call in `src/App.vue # line-19` 
 
 ### Running
-*Required to run APIs*
-```sh
-json-server --host YOUR_IP_ADDRESS public/db.json
-```
+
+> *IMPORTANT:* Please make sure the [laravel backend](https://github.com/kg-boss/ionic-backend) is running before you continue (Json-Server is no longer required)
 
 *Running in Browser (NOTIFICATIONS DISABLED)*
 ```sh
@@ -48,7 +55,20 @@ ionic build
 npx cap copy & npx cap sync
 npx cap open android 
 ```
-> **IMPORTANT:** some changes are required in Android Project as mentioned in `3- Deployment` further down! [Click here](https://github.com/kg-boss/ionic-form#note-1) to check it
+
+*Android Studio Project Configuration*
+```xml
+...
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+...
+<application
+      ...
+      android:usesCleartextTraffic="true"
+      ...
+      />
+...
+```
 
 ---
 ## Additional Info
@@ -58,6 +78,7 @@ This files covers
 2. Using API
 3. Deployment
 4. Notifications
+5. Camera
 
 ---
 

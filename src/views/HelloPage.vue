@@ -3,7 +3,7 @@
     <ion-header :translucent="true">
       <ion-toolbar>
           <ion-buttons slot="start">
-            <ion-back-button default-href="/home"></ion-back-button>
+            <ion-back-button default-href="/form"></ion-back-button>
           </ion-buttons>
           <ion-title>Bonjour</ion-title>
       </ion-toolbar>
